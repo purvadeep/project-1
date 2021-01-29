@@ -1,0 +1,57 @@
+import pickle
+import sys
+dict={}
+
+def write_in_file():
+    file=open("stud2.dat","ab")
+    no=int(input("enter no of students: "))
+    for i in range(no):
+        print("Enter details of student:", i+1)
+        dict["roll"]=int(input("Enter roll number: "))
+        dict["name"]=input("input the name: ")
+        dict["marks"]=int(input("Enter the marks: "))
+        pickle.dump(dict,file)
+    file.close()
+
+def display():
+    file=open("stud2.dat","rb")
+    try:
+        while True:
+            stud=pickle.load(file)
+            print(stud)
+    except EOFError:
+         pass
+    file.close()
+
+
+def search():
+    file=open("stud2.dat","rb")
+    r=int(input("enter the roll no to search: "))
+    found=0
+    try:
+        while True:
+            data=pickle.load(file)
+            if data["roll"]==r:
+                print("the roll no=",r,"record found")
+                print(data)
+                found=1
+                break
+    except EOFError:
+        pass
+    if found==0:
+        print("the rol no =",r,"record id not found")
+    file.close()
+
+while True:
+    print("MENU \n 1-Write in a file \n 2-display ")
+    print(" 3-search\n 4-exit \n")
+    ch=int(input("Enter your choice = "))
+    if ch==1:
+       write_in_file()
+    if ch==2:
+       display()
+    if ch==3:
+       search()
+    if ch==4:
+       print("program by puradeep")
+       sys.exit()
